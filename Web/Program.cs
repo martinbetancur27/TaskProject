@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Web.Areas.Identity;
 using Task.Infrastructure.Data;
+using Task.Core.Interfaces.Repositories;
+using Task.Infrastructure.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +31,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 
+builder.Services.AddScoped<IImportantTaskRepository, ImportantTaskRepositoryEFSQL>();
+builder.Services.AddScoped<IUrgentTaskRepository, UrgentTaskRepositoryEFSQL>();
 
 var app = builder.Build();
 
