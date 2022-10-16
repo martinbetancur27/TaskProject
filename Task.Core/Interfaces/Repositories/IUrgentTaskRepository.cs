@@ -9,8 +9,8 @@ namespace Task.Core.Interfaces.Repositories
 {
     public interface IUrgentTaskRepository
     {
-        public Task<bool> AddUrgentTaskAsync(UrgentTask urgentTask);
+        public Task<int> AddUrgentTaskAsync(UrgentTask urgentTask);
         public Task<bool> DeleteUrgentTaskAsync(int idUrgentTaskImportantTask);
-        public Task<IEnumerable<UrgentTask?>> GetUrgentTasksOfUser(string idUser);
+        public Task<List<UrgentTask?>> GetUrgentTasksOfUserAsync(string idUser);
     }
 }

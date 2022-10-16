@@ -19,18 +19,18 @@ namespace Task.Infrastructure.Data.Repositories
         }
 
 
-        public async Task<bool> AddUrgentTaskAsync(UrgentTask urgentTask)
+        public async Task<int> AddUrgentTaskAsync(UrgentTask urgentTask)
         {
             try
             {
                 await _databaseContext.UrgentTasks.AddAsync(urgentTask);
                 await _databaseContext.SaveChangesAsync();
 
-                return true;
+                return urgentTask.Id;
             }
             catch (System.Exception)
             {
-                return false;
+                return 0;
             }
         }
 
@@ -58,11 +58,11 @@ namespace Task.Infrastructure.Data.Repositories
         }
 
 
-        public async Task<IEnumerable<UrgentTask?>> GetUrgentTasksOfUser(string idUser)
+        public async Task<List<UrgentTask?>> GetUrgentTasksOfUserAsync(string idUser)
         {
             try
             {
-                return _databaseContext.UrgentTasks.Where(x => x.IdUser == idUser).OrderByDescending(d => d.EndDate);
+                return _databaseContext.UrgentTasks.Where(x => x.IdUser == idUser).OrderBy(d => d.EndDate).ToList();
             }
             catch (System.Exception)
             {

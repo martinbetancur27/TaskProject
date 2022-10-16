@@ -1,24 +1,28 @@
 ﻿@page "/"
 
-<!--<PageTitle>Index</PageTitle>-->
+<AuthorizeView>
+    <Authorized>
+        <!--<PageTitle>Index</PageTitle>-->
 
-<!--<h1>Hello, world!</h1>
+        <!--<h1>Hello, world!</h1>
 
-Welcome to your new app.
+        Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />-->
+        <SurveyPrompt Title="How is Blazor working for you?" />-->
 
         
 
-<main class="main">
-    <h1 class="title">Dont Forget!</h1>
-    <section class="tasks-themes">
-        <section class="important overflow-auto scrollbar-primary">
-            <Important/>
-        </section>
+        <main class="main">
+            <h1 class="title">Dont Forget!</h1>
+            <section class="tasks-themes">
+                <section class="border-bottom border-start border-2 important overflow-auto scrollbar-primary">
+                    <Important/>
+                </section>
 
-        <section class="urgent overflow-auto scrollbar-primary">
-            <Urgent/>
-        </section>
-    </section>
-</main>
+                <section class="border-bottom border-start border-2 urgent overflow-auto scrollbar-primary">
+                    <Urgent/>
+                </section>
+            </section>
+        </main>
+    </Authorized>
+</AuthorizeView>

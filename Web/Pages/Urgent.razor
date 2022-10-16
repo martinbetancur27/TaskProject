@@ -1,33 +1,110 @@
-﻿<main class="container border border-3 rounded bg-light">
+﻿@inject IUrgentTaskService urgentTaskService
+
+<main class="container border border-3 rounded bg-light">
 	<h1 class="fs-1 fw-bold text-danger text-center">Urgent</h1>
 	<section class="overflow-auto scrollbar-primary">
-		<form class="">
+		<EditForm Model="createUrgentTask" OnValidSubmit="CreateTask">
 			<div class="">
-				<input type="text" class="form-control form-control-lg" id="" placeholder="What is the Task">
+				<input type="text" class="form-control form-control-lg" id="" placeholder="What is the Task" @bind-value="createUrgentTask.Description" required>
 			</div>
 			<div class="d-flex justify-content-center d-flex align-items-center align-items-md-baseline">
-				<input type="date" class="form-control  w-50" id="">
-				<button type="submit" class="btn btn-primary mb-3 align-self-end">Add</button>
+				<input type="datetime-local" class="form-control  w-50" id="" @bind-value="createUrgentTask.EndDate" required>
+				<button class="btn btn-primary mb-3 align-self-end">Add</button>
 			</div>
-		</form>
+		</EditForm>
 				
 		<section class="" id="id-task">
 			<ul class="list-group">
-				<li class="list-group-item d-flex justify-content-between align-items-center">
-				<a href="#" class="m-2 badge bg-primary rounded-pill">OK</a>
-				<span class="fw-bold">Recoger la comida donde Fabian porque el no puede entregarmela</span>
-				<span class="badge bg-primary rounded-pill">29-09-2022</span>
-				</li>
-				<li class="list-group-item d-flex justify-content-between align-items-center">
-				<a href="#" class="m-2 badge bg-primary rounded-pill">OK</a>
-				<span class="fw-bold">A second list item</span>
-				<span class="badge bg-primary rounded-pill">29-09-2022</span>
-				</li>
+				@foreach (var taskItem in urgentTaskList)
+				{
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+						<a @onclick="@(() => DeleteTask(@taskItem.Id))" class="m-2 badge bg-primary rounded-pill">OK</a>
+						<span class="fw-bold">@taskItem.Description</span>
+						<div class="d-flex flex-column">
+							<span class="badge bg-primary rounded-pill">@taskItem.EndDate.Date.ToShortDateString()</span>
+							<span class="col badge bg-light rounded-pill col-auto text-dark">@taskItem.EndDate.ToString("hh:mm tt")</span>
+						</div>
+					</li>
+				}
 			</ul>
 		</section>
 	</section>            
 </main>
 
 @code {
+	protected List<UrgentTask> urgentTaskList;
+	protected CreateUrgentTaskDTO createUrgentTask = new CreateUrgentTaskDTO();
 
+	protected override async Task OnInitializedAsync()
+	{
+		urgentTaskList = await urgentTaskService.GetUrgentTasksOfUserAsync();
+	}
+
+
+	private async Task CreateTask()
+	{
+		var taskCreateObjectUrgentTask = Task<UrgentTask>.Run(() => new UrgentTask
+			{
+				Description = createUrgentTask.Description,
+				EndDate = createUrgentTask.EndDate
+			});
+
+		UrgentTask newUrgentTask = await taskCreateObjectUrgentTask;
+
+		int idNewTaskFromDb = await AddTaskDBAsync(newUrgentTask);
+
+		if (idNewTaskFromDb != 0)
+		{
+			var taskSetIdInNewObject = Task.Run(() => newUrgentTask.Id = idNewTaskFromDb);
+			await taskSetIdInNewObject;
+
+			AddTaskInList(newUrgentTask);
+		}
+
+		createUrgentTask = new CreateUrgentTaskDTO();
+	}
+
+
+	private async Task<int> AddTaskDBAsync(UrgentTask urgentTask)
+	{
+		return await urgentTaskService.AddUrgentTaskAsync(urgentTask);
+	}
+
+
+	private void AddTaskInList(UrgentTask urgentTask)
+	{
+		urgentTaskList.Add(urgentTask);
+	}
+
+
+	private async Task DeleteTask(int idTask)
+	{
+		if (idTask != 0)
+		{
+			bool responseDB = await DeleteInDBAsync(idTask);
+
+			if (responseDB)
+			{
+				await DeleteInListAsync(idTask);
+			}
+		}
+	}
+
+
+	private async Task<bool> DeleteInDBAsync(int idTask)
+	{
+		return await urgentTaskService.DeleteUrgentTaskAsync(idTask);
+	}
+
+
+	private async Task DeleteInListAsync(int idTask)
+	{
+		var taskFindUrgentTaskInList = Task<UrgentTask?>.Run(() => urgentTaskList.Find(x => x.Id == idTask));
+		UrgentTask? deleteTask = await taskFindUrgentTaskInList;
+
+		if (deleteTask != null)
+		{
+			urgentTaskList.Remove(deleteTask);
+		}
+	}
 }

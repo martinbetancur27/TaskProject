@@ -8,6 +8,9 @@ using Web.Areas.Identity;
 using Task.Infrastructure.Data;
 using Task.Core.Interfaces.Repositories;
 using Task.Infrastructure.Data.Repositories;
+using Task.Core.Interfaces.Services;
+using Task.Core.Services;
+using Task.Core.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,12 +30,20 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
         options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(20);
     })
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 
+
 builder.Services.AddScoped<IImportantTaskRepository, ImportantTaskRepositoryEFSQL>();
 builder.Services.AddScoped<IUrgentTaskRepository, UrgentTaskRepositoryEFSQL>();
+builder.Services.AddScoped<IUserService, UserManagerService>();
+builder.Services.AddScoped<IImportantTaskService, ImportantTaskService>();
+builder.Services.AddScoped<IUrgentTaskService, UrgentTaskService>();
+
+
 
 var app = builder.Build();
 

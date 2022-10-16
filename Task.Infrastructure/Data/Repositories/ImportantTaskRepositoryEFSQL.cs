@@ -20,18 +20,18 @@ namespace Task.Infrastructure.Data.Repositories
         }
 
 
-        public async Task<bool> AddImportantTaskAsync(ImportantTask importantTask)
+        public async Task<int> AddImportantTaskAsync(ImportantTask importantTask)
         {
             try
             {
                 await _databaseContext.ImportantTasks.AddAsync(importantTask);
                 await _databaseContext.SaveChangesAsync();
 
-                return true;
+                return importantTask.Id;
             }
             catch (System.Exception)
             {
-                return false;
+                return 0;
             }
         }
 
@@ -59,11 +59,11 @@ namespace Task.Infrastructure.Data.Repositories
         }
 
 
-        public async Task<IEnumerable<ImportantTask?>> GetImportantTasksOfUser(string idUser)
+        public async Task<List<ImportantTask?>> GetImportantTasksOfUserAsync(string idUser)
         {
             try
             {
-                return _databaseContext.ImportantTasks.Where(x => x.IdUser == idUser).OrderByDescending(d => d.EndDate);
+                return _databaseContext.ImportantTasks.Where(x => x.IdUser == idUser).OrderBy(d => d.EndDate).ToList();
             }
             catch (System.Exception)
             {
