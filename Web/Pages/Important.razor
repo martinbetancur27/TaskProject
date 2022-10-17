@@ -9,7 +9,7 @@
 			</div>
 			<div class="d-flex justify-content-center d-flex align-items-center align-items-md-baseline">
 				<input type="datetime-local" class="form-control  w-50" id="" @bind-value="createImportantTask.EndDate" required>
-				<button class="btn btn-primary mb-3 align-self-end">Add</button>
+				<button class="btn btn-primary mb-3 align-self-end">Add <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" hidden="@HideSpinnerAdd"></span></button>
 			</div>
 		</EditForm>
 				
@@ -19,7 +19,7 @@
 				{
 				<li class="list-group-item d-flex justify-content-between align-items-center">
 					<a @onclick="@(() => OnDeleteTask(@taskItem.Id))" class="text-decoration-none m-2 badge bg-primary rounded-pill">OK</a>
-					<span class="fw-bold">@taskItem.Description</span>
+						<span class="fw-bold text-break">@taskItem.Description</span>
 					<div class="d-flex flex-column">
 						<span class="badge bg-primary rounded-pill">@taskItem.EndDate.Date.ToShortDateString()</span>
 						<span class="col badge bg-light rounded-pill col-auto text-dark">@taskItem.EndDate.ToString("hh:mm tt")</span>
@@ -36,6 +36,8 @@
 	protected List<ImportantTask> importantTaskList;
 	protected CreateImportantTaskDTO createImportantTask = new CreateImportantTaskDTO();
 
+	private bool HideSpinnerAdd { get; set; } = true;
+
 	protected override async Task OnInitializedAsync()
 	{
 		importantTaskList = await importantTaskService.GetImportantTasksOfUserAsync();
@@ -44,6 +46,8 @@
 
 	private async Task OnCreateTask()
 	{
+		HideSpinnerAdd = false;
+
 		var taskCreateObjectImportantTask = Task<ImportantTask>.Run(() => new ImportantTask
 		{
 			Description = createImportantTask.Description,
@@ -63,6 +67,7 @@
 		}
 
 		createImportantTask = new CreateImportantTaskDTO();
+		HideSpinnerAdd = true;
 	}
 
 
