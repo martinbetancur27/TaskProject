@@ -15,14 +15,24 @@
         <main class="main">
             <h1 class="title">Dont Forget!</h1>
             <section class="tasks-themes">
+                <section class="border-bottom border-start border-2 urgent overflow-auto scrollbar-primary">
+                    <Urgent />
+                </section>
                 <section class="border-bottom border-start border-2 important overflow-auto scrollbar-primary">
                     <Important/>
-                </section>
-
-                <section class="border-bottom border-start border-2 urgent overflow-auto scrollbar-primary">
-                    <Urgent/>
                 </section>
             </section>
         </main>
     </Authorized>
+
+    <NotAuthorized>
+        <section class="d-flex flex-column justify-content-center align-items-center h-75">
+            <h1 class="fs-1">Create a To-Do list:</h1>
+            <h1 class="fs-1"><span class="text-danger fw-bold">Urgent</span> And <span class="text-warning fw-bold">Important</span></h1>
+            <div class="d-flex flex-column mt-3">
+                <a class="text-decoration-none fs-3" href="Identity/Account/Register">Register</a>
+                <a class="text-decoration-none fs-3" href="Identity/Account/Login">Log in</a>
+            </div>
+        </section>
+    </NotAuthorized>
 </AuthorizeView>
