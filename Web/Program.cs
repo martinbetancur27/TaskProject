@@ -31,6 +31,11 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     })
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+{
+    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+});
 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
@@ -42,8 +47,6 @@ builder.Services.AddScoped<IUrgentTaskRepository, UrgentTaskRepositoryEFSQL>();
 builder.Services.AddScoped<IUserService, UserManagerService>();
 builder.Services.AddScoped<IImportantTaskService, ImportantTaskService>();
 builder.Services.AddScoped<IUrgentTaskService, UrgentTaskService>();
-
-
 
 var app = builder.Build();
 
