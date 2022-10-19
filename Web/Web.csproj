@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Task.Core\Task.Core.csproj" />
-    <ProjectReference Include="..\Task.Infrastructure\Task.Infrastructure.csproj" />
+    <ProjectReference Include="..\TP.Core\TP.Core.csproj" />
+    <ProjectReference Include="..\TP.Infrastructure\TP.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

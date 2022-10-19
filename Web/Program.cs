@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Web.Areas.Identity;
-using Task.Infrastructure.Data;
-using Task.Core.Interfaces.Repositories;
-using Task.Infrastructure.Data.Repositories;
-using Task.Core.Interfaces.Services;
-using Task.Core.Services;
-using Task.Core.Entities;
+using TP.Infrastructure.Data;
+using TP.Core.Interfaces.Repositories;
+using TP.Infrastructure.Data.Repositories;
+using TP.Core.Interfaces.Services;
+using TP.Core.Services;
+using TP.Core.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 

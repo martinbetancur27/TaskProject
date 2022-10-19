@@ -5,9 +5,9 @@ VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{F1051B0E-F787-4649-8FC0-41179FDE7575}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task.Infrastructure", "Task.Infrastructure\Task.Infrastructure.csproj", "{05CF31FA-0BC3-43C9-91A0-2ADB3C142931}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TP.Infrastructure", "TP.Infrastructure\TP.Infrastructure.csproj", "{05CF31FA-0BC3-43C9-91A0-2ADB3C142931}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task.Core", "Task.Core\Task.Core.csproj", "{A9D7DAC0-AA41-4303-9E91-7A71D1BF60AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TP.Core", "TP.Core\TP.Core.csproj", "{A9D7DAC0-AA41-4303-9E91-7A71D1BF60AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
