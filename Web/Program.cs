@@ -11,6 +11,9 @@ using TP.Infrastructure.Data.Repositories;
 using TP.Core.Interfaces.Services;
 using TP.Core.Services;
 using TP.Core.Entities;
+using TP.Infrastructure.Data.Configuration;
+using TP.Infrastructure.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +24,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     {
-        options.SignIn.RequireConfirmedAccount = false;
+        options.SignIn.RequireConfirmedAccount = true;
         options.Password.RequireDigit = false;
         options.Password.RequiredLength = 6;
         options.Password.RequireNonAlphanumeric = false;
@@ -47,6 +50,18 @@ builder.Services.AddScoped<IUrgentTaskRepository, UrgentTaskRepositoryEFSQL>();
 builder.Services.AddScoped<IUserService, UserManagerService>();
 builder.Services.AddScoped<IImportantTaskService, ImportantTaskService>();
 builder.Services.AddScoped<IUrgentTaskService, UrgentTaskService>();
+
+// Add Email
+builder.Services.Configure<SmtpConfiguration>(options =>
+{
+    options.HostAddress = builder.Configuration.GetValue<string>("ExternalProviders:Gmail:SMTP:Address");
+    options.HostPort = Convert.ToInt32(builder.Configuration.GetValue<string>("ExternalProviders:Gmail:SMTP:Port"));
+    options.HostUsername = builder.Configuration.GetValue<string>("ExternalProviders:Gmail:SMTP:Account");
+    options.HostPassword = builder.Configuration["Authentication:Google:SmtpPassword"]; //Secret manager
+    options.SenderEmail = builder.Configuration.GetValue<string>("ExternalProviders:Gmail:SMTP:SenderEmail");
+    options.SenderName = builder.Configuration.GetValue<string>("ExternalProviders:Gmail:SMTP:SenderName");
+});
+builder.Services.AddTransient<IEmailSender, EmailServiceMailKit>();
 
 var app = builder.Build();
 
