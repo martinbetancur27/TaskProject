@@ -1,19 +1,15 @@
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using Web.Areas.Identity;
-using TP.Infrastructure.Data;
 using TP.Core.Interfaces.Repositories;
-using TP.Infrastructure.Data.Repositories;
 using TP.Core.Interfaces.Services;
 using TP.Core.Services;
-using TP.Core.Entities;
+using TP.Infrastructure.Data;
 using TP.Infrastructure.Data.Configuration;
+using TP.Infrastructure.Data.Repositories;
 using TP.Infrastructure.Services;
-using Microsoft.AspNetCore.Identity.UI.Services;
+using Web.Areas.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 

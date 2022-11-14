@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TP.Infrastructure.Data.Configuration;
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using MimeKit.Text;
-using Microsoft.AspNetCore.Identity.UI.Services;
+using TP.Infrastructure.Data.Configuration;
 
 
 namespace TP.Infrastructure.Services

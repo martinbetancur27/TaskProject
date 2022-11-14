@@ -1,30 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TP.Core.Entities;
+﻿using TP.Core.Entities;
 using TP.Core.Interfaces.Repositories;
 using TP.Core.Interfaces.Services;
 
 namespace TP.Core.Services
 {
-	public class UrgentTaskService : IUrgentTaskService
-	{
+    public class UrgentTaskService : IUrgentTaskService
+    {
         private readonly IUrgentTaskRepository _urgentTaskRepository;
         private readonly IUserService _userService;
 
 
         public UrgentTaskService(IUrgentTaskRepository urgentTaskRepository, IUserService userService)
-		{
+        {
             _urgentTaskRepository = urgentTaskRepository;
             _userService = userService;
         }
 
-		public async Task<int> AddAsync(UrgentTask urgentTask)
-		{
+        public async Task<int> AddAsync(UrgentTask urgentTask)
+        {
             string idUser = await _userService.GetIdAsync();
-            Console.WriteLine("ID " + idUser);
+
             if (idUser != null)
             {
                 urgentTask.IdUser = idUser;
@@ -35,13 +30,13 @@ namespace TP.Core.Services
             return 0;
         }
 
-		public async Task<bool> DeleteAsync(int idUrgentTask)
-		{
+        public async Task<bool> DeleteAsync(int idUrgentTask)
+        {
             return await _urgentTaskRepository.DeleteAsync(idUrgentTask);
         }
 
-		public async Task<List<UrgentTask?>> GetOfUserAsync()
-		{
+        public async Task<List<UrgentTask?>> GetOfUserAsync()
+        {
             string idUser = await _userService.GetIdAsync();
 
             if (idUser == null)
@@ -51,5 +46,5 @@ namespace TP.Core.Services
 
             return await _urgentTaskRepository.GetOfUserAsync(idUser);
         }
-	}
+    }
 }
