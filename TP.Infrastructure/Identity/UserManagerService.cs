@@ -17,7 +17,7 @@ namespace TP.Core.Services
         {
             _userManager = userManager;
         }
-        public async Task<string> GetUserIdAsync()
+        public async Task<string> GetIdAsync()
         {
             return _userManager.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }

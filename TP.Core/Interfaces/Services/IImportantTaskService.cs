@@ -9,8 +9,8 @@ namespace TP.Core.Interfaces.Services
 {
 	public interface IImportantTaskService
 	{
-        public Task<int> AddImportantTaskAsync(ImportantTask importantTask);
-        public Task<bool> DeleteImportantTaskAsync(int idImportantTask);
-        public Task<List<ImportantTask?>> GetImportantTasksOfUserAsync();
+        public Task<int> AddAsync(ImportantTask importantTask);
+        public Task<bool> DeleteAsync(int idImportantTask);
+        public Task<List<ImportantTask?>> GetOfUserAsync();
     }
 }

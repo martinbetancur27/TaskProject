@@ -20,7 +20,7 @@ namespace TP.Infrastructure.Data.Repositories
         }
 
 
-        public async Task<int> AddImportantTaskAsync(ImportantTask importantTask)
+        public async Task<int> AddAsync(ImportantTask importantTask)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace TP.Infrastructure.Data.Repositories
         }
 
 
-        public async Task<bool> DeleteImportantTaskAsync(int idImportantTask)
+        public async Task<bool> DeleteAsync(int idImportantTask)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace TP.Infrastructure.Data.Repositories
         }
 
 
-        public async Task<List<ImportantTask?>> GetImportantTasksOfUserAsync(string idUser)
+        public async Task<List<ImportantTask?>> GetOfUserAsync(string idUser)
         {
             try
             {

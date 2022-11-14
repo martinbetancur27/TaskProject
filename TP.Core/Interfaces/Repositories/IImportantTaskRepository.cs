@@ -9,8 +9,8 @@ namespace TP.Core.Interfaces.Repositories
 {
     public interface IImportantTaskRepository
     {
-        public Task<int> AddImportantTaskAsync(ImportantTask importantTask);
-        public Task<bool> DeleteImportantTaskAsync(int idImportantTask);
-        public Task<List<ImportantTask?>> GetImportantTasksOfUserAsync(string idUser);
+        public Task<int> AddAsync(ImportantTask importantTask);
+        public Task<bool> DeleteAsync(int idImportantTask);
+        public Task<List<ImportantTask?>> GetOfUserAsync(string idUser);
     }
 }

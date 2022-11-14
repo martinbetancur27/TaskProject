@@ -19,7 +19,7 @@ namespace TP.Infrastructure.Data.Repositories
         }
 
 
-        public async Task<int> AddUrgentTaskAsync(UrgentTask urgentTask)
+        public async Task<int> AddAsync(UrgentTask urgentTask)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace TP.Infrastructure.Data.Repositories
         }
 
 
-        public async Task<bool> DeleteUrgentTaskAsync(int idUrgentTask)
+        public async Task<bool> DeleteAsync(int idUrgentTask)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace TP.Infrastructure.Data.Repositories
         }
 
 
-        public async Task<List<UrgentTask?>> GetUrgentTasksOfUserAsync(string idUser)
+        public async Task<List<UrgentTask?>> GetOfUserAsync(string idUser)
         {
             try
             {

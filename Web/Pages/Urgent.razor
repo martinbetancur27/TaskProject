@@ -39,7 +39,7 @@
 
 	protected override async Task OnInitializedAsync()
 	{
-		urgentTaskList = await urgentTaskService.GetUrgentTasksOfUserAsync();
+		urgentTaskList = await urgentTaskService.GetOfUserAsync();
 	}
 
 
@@ -72,7 +72,7 @@
 
 	private async Task<int> AddTaskDBAsync(UrgentTask urgentTask)
 	{
-		return await urgentTaskService.AddUrgentTaskAsync(urgentTask);
+		return await urgentTaskService.AddAsync(urgentTask);
 	}
 
 
@@ -98,7 +98,7 @@
 
 	private async Task<bool> DeleteInDBAsync(int idTask)
 	{
-		return await urgentTaskService.DeleteUrgentTaskAsync(idTask);
+		return await urgentTaskService.DeleteAsync(idTask);
 	}
 
 

@@ -21,35 +21,35 @@ namespace TP.Core.Services
             _userService = userService;
         }
 
-		public async Task<int> AddUrgentTaskAsync(UrgentTask urgentTask)
+		public async Task<int> AddAsync(UrgentTask urgentTask)
 		{
-            string idUser = await _userService.GetUserIdAsync();
+            string idUser = await _userService.GetIdAsync();
             Console.WriteLine("ID " + idUser);
             if (idUser != null)
             {
                 urgentTask.IdUser = idUser;
 
-                return await _urgentTaskRepository.AddUrgentTaskAsync(urgentTask);
+                return await _urgentTaskRepository.AddAsync(urgentTask);
             }
 
             return 0;
         }
 
-		public async Task<bool> DeleteUrgentTaskAsync(int idUrgentTask)
+		public async Task<bool> DeleteAsync(int idUrgentTask)
 		{
-            return await _urgentTaskRepository.DeleteUrgentTaskAsync(idUrgentTask);
+            return await _urgentTaskRepository.DeleteAsync(idUrgentTask);
         }
 
-		public async Task<List<UrgentTask?>> GetUrgentTasksOfUserAsync()
+		public async Task<List<UrgentTask?>> GetOfUserAsync()
 		{
-            string idUser = await _userService.GetUserIdAsync();
+            string idUser = await _userService.GetIdAsync();
 
             if (idUser == null)
             {
                 return null;
             }
 
-            return await _urgentTaskRepository.GetUrgentTasksOfUserAsync(idUser);
+            return await _urgentTaskRepository.GetOfUserAsync(idUser);
         }
 	}
 }
