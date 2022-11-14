@@ -4,6 +4,8 @@
 	<h1 class="fs-1 fw-bold text-danger text-center">Urgent</h1>
 	<section class="overflow-auto scrollbar-primary">
 		<EditForm Model="createUrgentTask" OnValidSubmit="OnCreateTask">
+			<DataAnnotationsValidator />
+			<ValidationSummary />
 			<div class="">
 				<input type="text" class="form-control form-control-lg" id="" placeholder="What is the Task" @bind-value="createUrgentTask.Description" required>
 			</div>
