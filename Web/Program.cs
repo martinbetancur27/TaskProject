@@ -14,9 +14,30 @@ using Web.Areas.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("TaskProjectConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
+        builder.Configuration.GetConnectionString("TaskProjectConnectionProduction")
+        ));
+}
+else
+{
+    // Add DbContext
+    builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
+        builder.Configuration.GetConnectionString("TaskProjectConnection")
+        ));
+}
+
+builder.Services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
+
+builder.Services.AddServerSideBlazor()
+    .AddHubOptions(options =>
+    {
+        options.ClientTimeoutInterval = TimeSpan.FromSeconds(60);
+        options.HandshakeTimeout = TimeSpan.FromSeconds(30);
+    });
+
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     {
@@ -32,8 +53,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 {
-    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    googleOptions.ClientId = builder.Configuration.GetValue<string>("ExternalProviders:Gmail:Authentication:ClientId");
+    googleOptions.ClientSecret = builder.Configuration.GetValue<string>("ExternalProviders:Gmail:Authentication:ClientSecret");
 });
 
 builder.Services.AddRazorPages();
@@ -53,7 +74,7 @@ builder.Services.Configure<SmtpConfiguration>(options =>
     options.HostAddress = builder.Configuration.GetValue<string>("ExternalProviders:Gmail:SMTP:Address");
     options.HostPort = Convert.ToInt32(builder.Configuration.GetValue<string>("ExternalProviders:Gmail:SMTP:Port"));
     options.HostUsername = builder.Configuration.GetValue<string>("ExternalProviders:Gmail:SMTP:Account");
-    options.HostPassword = builder.Configuration["Authentication:Google:SmtpPassword"]; //Secret manager
+    options.HostPassword = builder.Configuration.GetValue<string>("ExternalProviders:Gmail:SMTP:Password");
     options.SenderEmail = builder.Configuration.GetValue<string>("ExternalProviders:Gmail:SMTP:SenderEmail");
     options.SenderName = builder.Configuration.GetValue<string>("ExternalProviders:Gmail:SMTP:SenderName");
 });
