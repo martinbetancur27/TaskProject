@@ -13,6 +13,10 @@ Clean Architecture
 
 https://taskprojectapp.azurewebsites.net
 
+# Watch video of how it works 🎥
+
+https://www.dropbox.com/s/2y1556efy9g1any/TaskProject.mp4?dl=0
+
 # 🛠 Skills
 * C#
 * Blazor
