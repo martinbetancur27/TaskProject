@@ -13,6 +13,12 @@ Clean Architecture
 
 https://taskprojectapp.azurewebsites.net
 
+**OPTIONAL FOR LOGIN:**
+
+User: admin@taskproject.com
+
+Password: 123456
+
 # Watch video of how it works 🎥
 
 https://www.dropbox.com/s/2y1556efy9g1any/TaskProject.mp4?dl=0
@@ -36,7 +42,7 @@ https://www.dropbox.com/s/2y1556efy9g1any/TaskProject.mp4?dl=0
 * Deploy to Azure from visual studio
 
 ## Warnings
-* User registration: emails should be confirmed. I am not attaching the functionality so as not to waste time for users testing the application.
+* User registration: emails should be confirmed. I am not attaching the functionality so as not to waste time for users testing the application. Also, do not configure to require a strong password to make testing easier.
 * To not include passwords in the code you can use Azure key vault
 
 ## Pending improvements
