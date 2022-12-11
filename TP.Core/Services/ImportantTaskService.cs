@@ -20,12 +20,6 @@ namespace TP.Core.Services
 
 		public async Task<ImportantTask?> AddAsync(CreateImportantTaskDTO createImportantTask)
 		{
-			var newImportantTask = new ImportantTask
-			{
-				Description = createImportantTask.Description,
-				EndDate = createImportantTask.EndDate
-			};
-
 			string idUser = await _userService.GetIdAsync();
 
 			if (idUser == null)
@@ -33,7 +27,13 @@ namespace TP.Core.Services
 				return null;
 			}
 
-			newImportantTask.IdUser = idUser;
+			var newImportantTask = new ImportantTask
+			{
+				Description = createImportantTask.Description,
+				EndDate = createImportantTask.EndDate,
+				IdUser = idUser
+			};
+
 			newImportantTask.Id = await _importantTaskRepository.AddAsync(newImportantTask);
 
 			return newImportantTask;

@@ -19,23 +19,23 @@ namespace TP.Core.Services
 
         public async Task<UrgentTask?> AddAsync(CreateUrgentTaskDTO createUrgentTask)
         {
+            string idUser = await _userService.GetIdAsync();
+
+            if (idUser == null)
+            {
+                return null;
+            }
+
             var newUrgentTask = new UrgentTask
 			{
 				Description = createUrgentTask.Description,
-				EndDate = createUrgentTask.EndDate
+				EndDate = createUrgentTask.EndDate,
+                IdUser = idUser
 			};
 
-            string idUser = await _userService.GetIdAsync();
-
-            if (idUser != null)
-            {
-                newUrgentTask.IdUser = idUser;
-                newUrgentTask.Id = await _urgentTaskRepository.AddAsync(newUrgentTask);
-                
-                return newUrgentTask;
-            }
-
-            return null;
+            newUrgentTask.Id = await _urgentTaskRepository.AddAsync(newUrgentTask);
+            
+            return newUrgentTask;
         }
 
         public async Task<bool> DeleteAsync(int idUrgentTask)
