@@ -1,4 +1,5 @@
-﻿using TP.Core.Entities;
+﻿using TP.Core.DTO.ImportantTask;
+using TP.Core.Entities;
 using TP.Core.Interfaces.Repositories;
 using TP.Core.Interfaces.Services;
 
@@ -17,18 +18,25 @@ namespace TP.Core.Services
 		}
 
 
-		public async Task<int> AddAsync(ImportantTask importantTask)
+		public async Task<ImportantTask?> AddAsync(CreateImportantTaskDTO createImportantTask)
 		{
-			string idUser = await _userService.GetIdAsync();
-			Console.WriteLine("ID " + idUser);
-			if (idUser != null)
+			var newImportantTask = new ImportantTask
 			{
-				importantTask.IdUser = idUser;
+				Description = createImportantTask.Description,
+				EndDate = createImportantTask.EndDate
+			};
 
-				return await _importantTaskRepository.AddAsync(importantTask);
+			string idUser = await _userService.GetIdAsync();
+
+			if (idUser == null)
+			{
+				return null;
 			}
 
-			return 0;
+			newImportantTask.IdUser = idUser;
+			newImportantTask.Id = await _importantTaskRepository.AddAsync(newImportantTask);
+
+			return newImportantTask;
 		}
 
 

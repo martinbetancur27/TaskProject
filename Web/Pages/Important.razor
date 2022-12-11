@@ -45,75 +45,46 @@
 		importantTaskList = await importantTaskService.GetOfUserAsync();
 	}
 
-
 	private async Task OnCreateTask()
 	{
 		HideSpinnerAdd = false;
 
-		var taskCreateObjectImportantTask = Task<ImportantTask>.Run(() => new ImportantTask
+		var newTaskFromDb = await importantTaskService.AddAsync(createImportantTask);
+
+		if (newTaskFromDb != null)
 		{
-			Description = createImportantTask.Description,
-			EndDate = createImportantTask.EndDate
-		});
-
-		ImportantTask newImportantTask = await taskCreateObjectImportantTask;
-
-		int idNewTaskFromDb = await AddTaskDBAsync(newImportantTask);
-
-		if (idNewTaskFromDb != 0)
-		{
-			var taskSetIdInNewObject = Task.Run(() => newImportantTask.Id = idNewTaskFromDb);
-			await taskSetIdInNewObject;
-
-			AddTaskInList(newImportantTask);
+			AddTaskInList(newTaskFromDb);
 		}
 
 		createImportantTask = new CreateImportantTaskDTO();
 		HideSpinnerAdd = true;
 	}
 
-
-	private async Task<int> AddTaskDBAsync(ImportantTask importantTask)
-	{
-		return await importantTaskService.AddAsync(importantTask);
-	}
-
-
 	private void AddTaskInList(ImportantTask importantTask)
 	{
 		importantTaskList.Add(importantTask);
 	}
 
-
 	private async Task OnDeleteTask(int idTask)
 	{
 		if (idTask != 0)
 		{
-			bool responseDB = await DeleteInDBAsync(idTask);
+			bool responseDB = await importantTaskService.DeleteAsync(idTask);
 
 			if (responseDB)
 			{
-				await DeleteInListAsync(idTask);
+				DeleteTaskInListAsync(idTask);
 			}
 		}
 	}
 
-
-	private async Task<bool> DeleteInDBAsync(int idTask)
+	private void DeleteTaskInListAsync(int idTask)
 	{
-		return await importantTaskService.DeleteAsync(idTask);
-	}
+		var findImportantTaskInList = importantTaskList.Find(x => x.Id == idTask);
 
-
-	private async Task DeleteInListAsync(int idTask)
-	{ 
-		var taskFindImportantTaskInList = Task<ImportantTask?>.Run(() => importantTaskList.Find(x => x.Id == idTask));
-
-		ImportantTask? deleteTask = await taskFindImportantTaskInList;
-
-		if (deleteTask != null)
+		if (findImportantTaskInList != null)
 		{
-			importantTaskList.Remove(deleteTask);
+			importantTaskList.Remove(findImportantTaskInList);
 		}
 	}
 }
