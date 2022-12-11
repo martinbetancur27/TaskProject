@@ -44,74 +44,46 @@
 		urgentTaskList = await urgentTaskService.GetOfUserAsync();
 	}
 
-
 	private async Task OnCreateTask()
 	{
 		HideSpinnerAdd = false;
 
-		var taskCreateObjectUrgentTask = Task<UrgentTask>.Run(() => new UrgentTask
-			{
-				Description = createUrgentTask.Description,
-				EndDate = createUrgentTask.EndDate
-			});
+		var newTaskFromDb  = await urgentTaskService.AddAsync(createUrgentTask);
 
-		UrgentTask newUrgentTask = await taskCreateObjectUrgentTask;
-
-		int idNewTaskFromDb = await AddTaskDBAsync(newUrgentTask);
-
-		if (idNewTaskFromDb != 0)
+		if (newTaskFromDb != null)
 		{
-			var taskSetIdInNewObject = Task.Run(() => newUrgentTask.Id = idNewTaskFromDb);
-			await taskSetIdInNewObject;
-
-			AddTaskInList(newUrgentTask);
+			AddTaskInList(newTaskFromDb);
 		}
 
 		createUrgentTask = new CreateUrgentTaskDTO();
 		HideSpinnerAdd = true;
 	}
 
-
-	private async Task<int> AddTaskDBAsync(UrgentTask urgentTask)
-	{
-		return await urgentTaskService.AddAsync(urgentTask);
-	}
-
-
 	private void AddTaskInList(UrgentTask urgentTask)
 	{
 		urgentTaskList.Add(urgentTask);
 	}
 
-
 	private async Task OnDeleteTask(int idTask)
 	{
 		if (idTask != 0)
 		{
-			bool responseDB = await DeleteInDBAsync(idTask);
+			bool responseDB = await urgentTaskService.DeleteAsync(idTask);
 
 			if (responseDB)
 			{
-				await DeleteInListAsync(idTask);
+				DeleteInList(idTask);
 			}
 		}
 	}
 
-
-	private async Task<bool> DeleteInDBAsync(int idTask)
+	private void DeleteInList(int idTask)
 	{
-		return await urgentTaskService.DeleteAsync(idTask);
-	}
+		var urgentTaskInList = urgentTaskList.Find(x => x.Id == idTask);
 
-
-	private async Task DeleteInListAsync(int idTask)
-	{
-		var taskFindUrgentTaskInList = Task<UrgentTask?>.Run(() => urgentTaskList.Find(x => x.Id == idTask));
-		UrgentTask? deleteTask = await taskFindUrgentTaskInList;
-
-		if (deleteTask != null)
+		if (urgentTaskInList != null)
 		{
-			urgentTaskList.Remove(deleteTask);
+			urgentTaskList.Remove(urgentTaskInList);
 		}
 	}
 }

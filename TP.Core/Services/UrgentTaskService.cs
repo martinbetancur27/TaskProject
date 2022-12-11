@@ -1,4 +1,5 @@
-﻿using TP.Core.Entities;
+﻿using TP.Core.DTO.UrgentTask;
+using TP.Core.Entities;
 using TP.Core.Interfaces.Repositories;
 using TP.Core.Interfaces.Services;
 
@@ -16,18 +17,25 @@ namespace TP.Core.Services
             _userService = userService;
         }
 
-        public async Task<int> AddAsync(UrgentTask urgentTask)
+        public async Task<UrgentTask?> AddAsync(CreateUrgentTaskDTO createUrgentTask)
         {
+            var newUrgentTask = new UrgentTask
+			{
+				Description = createUrgentTask.Description,
+				EndDate = createUrgentTask.EndDate
+			};
+
             string idUser = await _userService.GetIdAsync();
 
             if (idUser != null)
             {
-                urgentTask.IdUser = idUser;
-
-                return await _urgentTaskRepository.AddAsync(urgentTask);
+                newUrgentTask.IdUser = idUser;
+                newUrgentTask.Id = await _urgentTaskRepository.AddAsync(newUrgentTask);
+                
+                return newUrgentTask;
             }
 
-            return 0;
+            return null;
         }
 
         public async Task<bool> DeleteAsync(int idUrgentTask)

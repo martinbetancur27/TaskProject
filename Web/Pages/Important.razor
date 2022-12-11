@@ -73,18 +73,18 @@
 
 			if (responseDB)
 			{
-				DeleteTaskInListAsync(idTask);
+				DeleteTaskInList(idTask);
 			}
 		}
 	}
 
-	private void DeleteTaskInListAsync(int idTask)
+	private void DeleteTaskInList(int idTask)
 	{
-		var findImportantTaskInList = importantTaskList.Find(x => x.Id == idTask);
+		var importantTaskInList = importantTaskList.Find(x => x.Id == idTask);
 
-		if (findImportantTaskInList != null)
+		if (importantTaskInList != null)
 		{
-			importantTaskList.Remove(findImportantTaskInList);
+			importantTaskList.Remove(importantTaskInList);
 		}
 	}
 }
