@@ -59,7 +59,7 @@ namespace TP.Infrastructure.Data.Repositories
         }
 
 
-        public async Task<List<ImportantTask?>> GetOfUserAsync(string idUser)
+        public async Task<List<ImportantTask>?> GetOfUserAsync(string idUser)
         {
             try
             {

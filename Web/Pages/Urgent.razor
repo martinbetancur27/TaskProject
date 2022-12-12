@@ -34,7 +34,7 @@
 </main>
 
 @code {
-	protected List<UrgentTask> urgentTaskList;
+	protected List<UrgentTask>? urgentTaskList;
 	protected CreateUrgentTaskDTO createUrgentTask = new CreateUrgentTaskDTO();
 
 	private bool HideSpinnerAdd { get; set; } = true;
@@ -61,7 +61,7 @@
 
 	private void AddTaskInList(UrgentTask urgentTask)
 	{
-		urgentTaskList.Add(urgentTask);
+		urgentTaskList?.Add(urgentTask);
 	}
 
 	private async Task OnDeleteTask(int idTask)
@@ -79,11 +79,14 @@
 
 	private void DeleteInList(int idTask)
 	{
-		var urgentTaskInList = urgentTaskList.Find(x => x.Id == idTask);
-
-		if (urgentTaskInList != null)
+		if (urgentTaskList != null)
 		{
-			urgentTaskList.Remove(urgentTaskInList);
+			var urgentTaskInList = urgentTaskList.Find(x => x.Id == idTask);
+
+			if (urgentTaskInList != null)
+			{
+				urgentTaskList.Remove(urgentTaskInList);
+			}
 		}
 	}
 }

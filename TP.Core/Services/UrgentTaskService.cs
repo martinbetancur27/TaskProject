@@ -10,7 +10,6 @@ namespace TP.Core.Services
         private readonly IUrgentTaskRepository _urgentTaskRepository;
         private readonly IUserService _userService;
 
-
         public UrgentTaskService(IUrgentTaskRepository urgentTaskRepository, IUserService userService)
         {
             _urgentTaskRepository = urgentTaskRepository;
@@ -43,16 +42,11 @@ namespace TP.Core.Services
             return await _urgentTaskRepository.DeleteAsync(idUrgentTask);
         }
 
-        public async Task<List<UrgentTask?>> GetOfUserAsync()
+        public async Task<List<UrgentTask>?> GetOfUserAsync()
         {
             string idUser = await _userService.GetIdAsync();
 
-            if (idUser == null)
-            {
-                return null;
-            }
-
-            return await _urgentTaskRepository.GetOfUserAsync(idUser);
+            return idUser == null ? null : await _urgentTaskRepository.GetOfUserAsync(idUser);
         }
     }
 }

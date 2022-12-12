@@ -7,6 +7,6 @@ namespace TP.Core.Interfaces.Services
     {
         public Task<UrgentTask?> AddAsync(CreateUrgentTaskDTO createUrgentTask);
         public Task<bool> DeleteAsync(int idUrgentTask);
-        public Task<List<UrgentTask?>> GetOfUserAsync();
+        public Task<List<UrgentTask>?> GetOfUserAsync();
     }
 }

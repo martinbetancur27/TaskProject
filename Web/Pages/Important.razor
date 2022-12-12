@@ -35,7 +35,7 @@
 
 @code {
 
-	protected List<ImportantTask> importantTaskList;
+	protected List<ImportantTask>? importantTaskList;
 	protected CreateImportantTaskDTO createImportantTask = new CreateImportantTaskDTO();
 
 	private bool HideSpinnerAdd { get; set; } = true;
@@ -62,7 +62,7 @@
 
 	private void AddTaskInList(ImportantTask importantTask)
 	{
-		importantTaskList.Add(importantTask);
+		importantTaskList?.Add(importantTask);
 	}
 
 	private async Task OnDeleteTask(int idTask)
@@ -80,11 +80,14 @@
 
 	private void DeleteTaskInList(int idTask)
 	{
-		var importantTaskInList = importantTaskList.Find(x => x.Id == idTask);
-
-		if (importantTaskInList != null)
+		if (importantTaskList != null)
 		{
-			importantTaskList.Remove(importantTaskInList);
+			var importantTaskInList = importantTaskList.Find(x => x.Id == idTask);
+
+			if (importantTaskInList != null)
+			{
+				importantTaskList.Remove(importantTaskInList);
+			}
 		}
 	}
 }
