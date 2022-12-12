@@ -46,7 +46,7 @@ namespace TP.Core.Services
 		{
 			string idUser = await _userService.GetIdAsync();
 
-			return idUser == null ? null : await _importantTaskRepository.GetOfUserAsync(idUser);
+			return idUser == null ? null : _importantTaskRepository.GetOfUser(idUser);
 		}
 	}
 }

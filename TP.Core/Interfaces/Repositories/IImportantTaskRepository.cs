@@ -6,6 +6,6 @@ namespace TP.Core.Interfaces.Repositories
     {
         public Task<int> AddAsync(ImportantTask importantTask);
         public Task<bool> DeleteAsync(int idImportantTask);
-        public Task<List<ImportantTask>?> GetOfUserAsync(string idUser);
+        public List<ImportantTask>? GetOfUser(string idUser);
     }
 }
