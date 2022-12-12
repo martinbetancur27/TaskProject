@@ -10,14 +10,9 @@ You have a profile to create and delete tasks without load the page
 Clean Architecture
 ```
 # Try App 👩‍💻
-
+## Sorry, the resources have been deleted. The video shows how it works.
 https://taskprojectapp.azurewebsites.net
 
-**OPTIONAL FOR LOGIN:**
-
-User: admin@taskproject.com
-
-Password: 123456
 
 # Watch video of how it works 🎥
 
