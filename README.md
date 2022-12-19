@@ -42,6 +42,7 @@ https://www.dropbox.com/s/2y1556efy9g1any/TaskProject.mp4?dl=0
 
 ## Pending improvements
 
+* Fix performance: the client should receive an IEnumerable when ask for a list; Service and Repository layer should return IEnumerable
 * Limit task creation: maximum 15 tasks per topic
 * Improve experience when deleting task
 
